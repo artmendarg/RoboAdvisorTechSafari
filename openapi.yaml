@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: Tech Safari – Robo Advisor (Public) – STUB
+  version: 0.3.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /ingest/upload:
+    post:
+      summary: Receive dataset as multipart zip (idempotent)
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          required: false
+          schema: { type: string }
+      responses:
+        "200":
+          description: Dataset accepted
+  /rebalance:
+    post:
+      summary: Initiate a rebalance (supports Idempotency-Key)
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          required: false
+          schema: { type: string }
+      responses:
+        "200":
+          description: Orders
+        "503":
+          description: Missing prices
+  /ack:
+    post:
+      summary: Receive order acknowledgement
+      responses:
+        "200":
+          description: ACK stored (duplicate flagged)
+  /health:
+    get:
+      summary: Liveness/readiness
+      responses:
+        "200":
+          description: OK

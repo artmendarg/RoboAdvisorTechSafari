@@ -1,0 +1,4 @@
+ticker,weight,sector
+AAPL,0.035,Information Technology
+MSFT,0.040,Information Technology
+TSLA,0.020,Consumer Discretionary

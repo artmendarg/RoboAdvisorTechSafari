@@ -1,0 +1,5 @@
+client_id,ticker,qty
+C001,AAPL,120
+C001,MSFT,80
+C004,TSLA,20
+C004,AAPL,15
