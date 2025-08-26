@@ -1,0 +1,153 @@
+{
+  "name": "RoboAdvisor",
+  "version": "1",
+  "items": [
+    {
+      "type": "http",
+      "name": "Upload",
+      "filename": "Upload.bru",
+      "seq": 1,
+      "settings": {
+        "encodeUrl": false
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8000/ingest/upload",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Idempotency-Key",
+            "value": "ds-001",
+            "enabled": true
+          },
+          {
+            "name": "Content-Type",
+            "value": "multipart/form-data",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "multipartForm",
+          "formUrlEncoded": [],
+          "multipartForm": [
+            {
+              "type": "file",
+              "name": "file",
+              "value": [
+                "/Users/artmcair/Documents/workspace/robo-advisor/upload.zip"
+              ],
+              "enabled": true
+            },
+            {
+              "type": "text",
+              "name": "asOf",
+              "value": "2025-08-26",
+              "enabled": true
+            }
+          ],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Rebalance",
+      "filename": "Rebalance.bru",
+      "seq": 2,
+      "settings": {
+        "encodeUrl": false
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8000/rebalance",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json",
+            "enabled": true
+          },
+          {
+            "name": "Idempotency-Key",
+            "value": "rb-001",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"asOf\": \"2025-08-26\",\n  \"filters\": {\n    \"accountIds\": [\n      \"C001\",\n      \"C004\"\n    ],\n    \"minCashPct\": 0.02,\n    \"maxSecurityWeight\": 0.10,\n    \"maxSectorWeight\": 0.25\n  },\n  \"sentimentWeight\": 0.20\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "ACK",
+      "filename": "ACK.bru",
+      "seq": 3,
+      "settings": {
+        "encodeUrl": false
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8000/ack",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"requestId\": \"<copy-from-rebalance-response>\",\n  \"orders\": []\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    }
+  ],
+  "environments": [],
+  "brunoConfig": {
+    "version": "1",
+    "name": "RoboAdvisor",
+    "type": "collection",
+    "ignore": [
+      "node_modules",
+      ".git"
+    ],
+    "size": 0,
+    "filesCount": 0
+  }
+}
